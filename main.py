@@ -17,7 +17,16 @@ states_list = states_frame["state"].tolist()
 guessed_states = []
 
 while len(guessed_states) < 50:    
-    guess = s.textinput(title='Guess', prompt='Guess a US State:').capitalize()
+    guess = s.textinput(title=f'{len(guessed_states)} of 50 States guessed right', prompt='Guess a US State:').title()
+    
+    if guess == 'Exit':
+        missed_states = []
+        for n in states_list:
+            if n not in guessed_states:
+                missed_states.append(n)
+        save_dataframe = pandas.DataFrame(missed_states)
+        save_dataframe.to_csv("missed_states.csv")
+        break
 
     # print(data_with_pandas[data_with_pandas["temp"] == data_with_pandas["temp"].max()]) #it will print the item in a position that returns True
     # check = states_frame[states_frame["state"] == guess]
